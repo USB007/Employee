@@ -1,0 +1,37 @@
+<h3>{{viewTitle}}</h3>
+
+<form action="/employee" method="POST" autocomplete="off">
+    <input type="hidden" name="_id" value="{{emp._id}}">
+    <div class="form-group">
+        <label>User ID</label>
+        <input type="text" class="form-control" name="id" placeholder="User ID" value="{{emp.id}}">
+        <div class="text-danger">
+            {{emp.idError}}</div>
+    </div>
+    <div class="form-group">
+        <label>User Name</label>
+        <input type="text" class="form-control" name="username" placeholder="User Name" value="{{emp.username}}">
+        <div class="text-danger">
+            {{emp.usernameError}}</div>
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input type="text" class="form-control" name="password" placeholder="Please Enter Password" value="{{emp.password}}">
+        <div class="text-danger">
+            {{emp.passwordError}}</div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Email ID</label>
+            <input type="text" class="form-control" name="email" placeholder="Plzz Enter email id" value="{{emp.email}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Salary</label>
+            <input type="text" class="form-control" name="salary" placeholder="Plzz Enter Salary" value="{{emp.salary}}">
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-info"><i class="fa fa-database"></i> Submit</button>
+        <a class="btn btn-secondary" href="/employee/list"><i class="fa fa-list-alt"></i> View All</a>
+    </div>
+</form>
