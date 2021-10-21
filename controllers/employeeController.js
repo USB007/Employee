@@ -4,14 +4,22 @@ const mongoose = require('mongoose');
 const Employee = mongoose.model('Employee');
 
 
+// Insert Route
 router.get('/',(req,res) => {
     res.render('employee/addOrEdit',{
-        viewTitle : "Inserted Employee"
+        viewTitle : "Insert Employee"
     });
 });
+
+
+// Update Route
 router.post('/',(req,res) => {
+    if(req.body._id == '')
     insertRecord(req,res);
-})
+    else
+    updateRecord(req,res);
+});
+
 
 // Insert Record Function
 function insertRecord(req,res) {
@@ -32,51 +40,11 @@ function insertRecord(req,res) {
 }
 
 
-// update employee function
-
-// function updateRecord(req, res) {
-//     Employee.findOneAndUpdate({ _id: req.body.id },
-//             req.body, { new: true }, (err, doc) => {
-//         if (!err) { res.redirect('employee/list'); }
-//         else {
-//             if (err.name == 'ValidationError') {
-//                 handleValidationError(err, req.body);
-//                 res.render("employee/addOrEdit", {
-//                     viewTitle: 'Update Employee',
-//                     employee: req.body
-//                 });
-//             }
-//             else
-//                 console.log('Error during record update : ' + err);
-//         }
-//     });
-//     next();
-// }
-
-
-function updateRecord(req,res){
-    Employee.findByIdAndUpdate({ _id: req.body._id }, req.body, { new: true }, (err, doc) => {
-        if (!err) { res.redirect('/list'); }
-        else {
-            if (err.name == 'ValidationError') {
-                handleValidationError(err, req.body);
-                res.render("views/employee/addOrEdit", {
-                    viewTitle: 'Update User',
-                    users: req.body
-                });
-            }
-            else
-                console.log('Error during record update : ' + err);
-        }
-    });
-}
-
-
 // Retrieving employee from database
 router.get('/list',(req,res) => { 
-    // res.json('from List');
     Employee.find((err, docs) => {
         if(!err) {
+            
             res.render('employee/list',{
                 list:docs
             });
@@ -84,11 +52,50 @@ router.get('/list',(req,res) => {
         else {
             console.log('error in retrieving employee list : ' + err);
         }
-    }).lean(); // It is prevent the warning when trying to display records
+    }).lean(); // It is prevent the warning when trying to display records. It is must use while doing CRUD Operations using HBS.
 });
 
 
-// delete employee
+// Update Employee
+
+router.get('/:id', (req, res) => {
+    Employee.findById(req.params.id, (err, doc) => {
+        if (!err) {
+            res.render("employee/addOrEdit", {
+                viewTitle: "Update Employee",
+                employee: doc
+            });
+        }
+    });
+});
+
+
+
+// update employee function
+
+function updateRecord(req, res) {
+    Employee.findOneAndUpdate({ _id: req.body._id },
+            req.body, { new: true }, (err, doc) => {
+        if (!err) { res.redirect('employee/list'); }
+        else {
+            if (err.name == 'ValidationError') {
+                handleValidationError(err, req.body);
+                res.render("employee/addOrEdit", {
+                    viewTitle: 'Update Employee',
+                    employee: req.body
+                });
+            }
+            else
+                console.log('Error during record update : ' + err);
+        }
+    });
+    // next();
+}
+
+
+
+
+// delete route employee
 
 router.get('/delete/:id', (req, res) => {
     Employee.findByIdAndRemove(req.params.id, (err, doc) => {
@@ -98,30 +105,5 @@ router.get('/delete/:id', (req, res) => {
         else { console.log('Error in employee delete :' + err); }
     });
 });
-
-
-// Update Employee details
-// router.get('/:_id', (req, res) => {
-//         Employee.findByIdAndUpdate(req.params._id, (err, doc) => {
-//         if (!err) {
-//             res.render("employee/addOrEdit", {
-//                 viewTitle: "Update Employee",
-//                 employee: doc
-//             });
-//         }else { res.send('Error in employee update :' + err); }
-//     });
-// });
-
-router.get('/:id', (req, res) => {
-    Employee.findById(req.params.id, (err, doc) => {
-        if (!err) {
-            res.render("employee/addOrEdit", {
-                titleName: "Update Employee",
-                employee: doc
-            });
-        }
-    });
-});
-
 
 module.exports =router;
