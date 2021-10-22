@@ -23,6 +23,12 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 
+app.use(
+    express.urlencoded({
+      extended: true
+    })
+  );
+
 
 app.set('views',path.join(__dirname,'/views/'));
 app.engine('hbs', exphbs({ extname: 'hbs', defaultLayout: 'mainLayout', layoutsDir: __dirname + '/views/layouts/', }));

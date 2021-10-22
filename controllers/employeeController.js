@@ -3,6 +3,8 @@ var router= express.Router();
 const mongoose = require('mongoose');
 const Employee = mongoose.model('Employee');
 
+const jil="hello";
+
 
 // Insert Route
 router.get('/',(req,res) => {
@@ -42,9 +44,8 @@ function insertRecord(req,res) {
 
 // Retrieving employee from database
 router.get('/list',(req,res) => { 
-    Employee.find((err, docs) => {
+    Employee.find((err, docs)  => {
         if(!err) {
-            
             res.render('employee/list',{
                 list:docs
             });
@@ -52,23 +53,9 @@ router.get('/list',(req,res) => {
         else {
             console.log('error in retrieving employee list : ' + err);
         }
-    }).lean(); // It is prevent the warning when trying to display records. It is must use while doing CRUD Operations using HBS.
+    }).sort({_id:-1}).lean(); // It is prevent the warning when trying to display records. It is must use while doing CRUD Operations using HBS.
+// .sort({_id:-1}) this will help me to sort the data and show the lastest entry on top.
 });
-
-
-// Update Employee
-
-router.get('/:id', (req, res) => {
-    Employee.findById(req.params.id, (err, doc) => {
-        if (!err) {
-            res.render("employee/addOrEdit", {
-                viewTitle: "Update Employee",
-                employee: doc
-            });
-        }
-    });
-});
-
 
 
 // update employee function
@@ -82,15 +69,32 @@ function updateRecord(req, res) {
                 handleValidationError(err, req.body);
                 res.render("employee/addOrEdit", {
                     viewTitle: 'Update Employee',
-                    employee: req.body
+                    emp: req.body
+                    
                 });
             }
             else
                 console.log('Error during record update : ' + err);
         }
-    });
-    // next();
+    }).lean();
+
 }
+
+
+// Update Employee
+
+router.get('/:id', (req, res) => {
+    Employee.findById(req.params.id, (err, doc) => {console.log(doc)  
+        if (!err) {
+            res.render("employee/addOrEdit", {
+                viewTitle: "Update Employee",
+                emp: doc,
+                
+            
+            });
+        }
+    }).lean();
+});
 
 
 

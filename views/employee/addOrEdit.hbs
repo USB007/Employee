@@ -1,5 +1,6 @@
+
 <h3>{{viewTitle}}</h3>
-  
+
 <form action="/employee" method="POST" autocomplete="off">
     <input type="hidden" name="_id" value="{{emp._id}}">
     <div class="form-group">
@@ -24,14 +25,39 @@
             {{emp.passwordError}}</div>
     </div>
     <div class="form-row">
+        
         <div class="form-group col-md-6">
             <label>Email ID</label>
-            <input type="text" class="form-control" name="email" placeholder="Plzz Enter email id" value="{{emp.email}}" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" >
+            <input type="text" class="form-control" name="email" placeholder="Plzz Enter email id" value="{{emp.email}}" pattern="[Aa-Zz0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" >
         </div>
-        <div class="form-group col-md-6">
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+
+        {{!-- DROP DOWN LIST  --}}
+        <div>
+        <label>Salary</label>
+        <select class="form-control"  name="salary" id='ddl'>
+        <option value="0" >Select Salary Slab</option>
+        <option value="Below 2 Lacs" >Below 2 Lacs</option>
+        <option value="2-4 Lacs" selected>2-4 Lacs</option>
+        <option value="4-7 Lacs" >4-7 Lacs</option>
+        <option value="Above 7 Lacs" > Above 7 Lacs</option>
+        </select>
+
+        </div>
+
+
+
+        {{!-- <div class="form-group col-md-6">
             <label>Salary</label>
             <input type="number" class="form-control" name="salary" placeholder="Plzz Enter Salary" value="{{emp.salary}}" >
-        </div>
+        </div> --}}
+
+            {{!-- <div class="form-group col-md-6">
+            <label>Salary</label>
+            <input type="text" class="form-control" name="salary" placeholder="Plzz Enter Salary" value="{{emp.salary}}" >
+        </div> --}}
+
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-info"><i class="fa fa-database"></i> Submit</button>
