@@ -3,10 +3,8 @@ var router= express.Router();
 const mongoose = require('mongoose');
 const Employee = mongoose.model('Employee');
 
-const jil="hello";
 
-
-// Insert Route
+// Employee Insert Route
 router.get('/',(req,res) => {
     res.render('employee/addOrEdit',{
         viewTitle : "Insert Employee"
@@ -14,12 +12,24 @@ router.get('/',(req,res) => {
 });
 
 
-// Update Route
+// Employee Update Route
 router.post('/',(req,res) => {
     if(req.body._id == '')
     insertRecord(req,res);
     else
     updateRecord(req,res);
+});
+
+
+// Employee Delete route 
+
+router.get('/delete/:id', (req, res) => {
+    Employee.findByIdAndRemove(req.params.id, (err, doc) => {
+        if (!err) {
+            res.redirect('/employee/list');
+        }
+        else { console.log('Error in employee delete :' + err); }
+    });
 });
 
 
@@ -36,8 +46,6 @@ function insertRecord(req,res) {
             res.redirect('/employee/list');
         else
             console.log("Error During Record Insertion :" + err );
-
-
     });
 }
 
@@ -77,7 +85,6 @@ function updateRecord(req, res) {
                 console.log('Error during record update : ' + err);
         }
     }).lean();
-
 }
 
 
@@ -89,25 +96,11 @@ router.get('/:id', (req, res) => {
             res.render("employee/addOrEdit", {
                 viewTitle: "Update Employee",
                 emp: doc,
-                
-            
             });
         }
     }).lean();
 });
 
 
-
-
-// delete route employee
-
-router.get('/delete/:id', (req, res) => {
-    Employee.findByIdAndRemove(req.params.id, (err, doc) => {
-        if (!err) {
-            res.redirect('/employee/list');
-        }
-        else { console.log('Error in employee delete :' + err); }
-    });
-});
 
 module.exports =router;
