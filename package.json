@@ -20,6 +20,7 @@
   "homepage": "https://github.com/USB007/emp#readme",
   "dependencies": {
     "@handlebars/allow-prototype-access": "^1.0.5",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.18.3",
     "ejs": "^3.1.6",
     "express": "^4.17.1",

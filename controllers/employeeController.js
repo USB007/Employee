@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const Employee = mongoose.model('Employee');
 
 
-// Employee Insert Route
+// Insert Route
 router.get('/',(req,res) => {
     res.render('employee/addOrEdit',{
         viewTitle : "Insert Employee"
@@ -12,24 +12,32 @@ router.get('/',(req,res) => {
 });
 
 
-// Employee Update Route
-router.post('/',(req,res) => {
-    if(req.body._id == '')
-    insertRecord(req,res);
-    else
+// Update Route
+// router.post('/',(req,res) => {
+//     if(req.body._id == '')
+//     insertRecord(req,res);
+//     else
+//     updateRecord(req,res);
+// });
+
+
+// // Insert Employee Recoord into Database
+// router.post('/',(req,res) => {
+//     // req.body._id == ''
+//     insertRecord(req,res);
+//     // console.log('Error While Inserting employee record')
+//     });
+
+
+
+
+
+// Update Employee Recoord into Database
+router.post('/update',(req,res) => {
+    if(req.body._id == _id)
     updateRecord(req,res);
-});
-
-
-// Employee Delete route 
-
-router.get('/delete/:id', (req, res) => {
-    Employee.findByIdAndRemove(req.params.id, (err, doc) => {
-        if (!err) {
-            res.redirect('/employee/list');
-        }
-        else { console.log('Error in employee delete :' + err); }
-    });
+    else 
+    console.log('Error While updating employee record')
 });
 
 
@@ -46,11 +54,13 @@ function insertRecord(req,res) {
             res.redirect('/employee/list');
         else
             console.log("Error During Record Insertion :" + err );
+
+
     });
 }
 
 
-// Retrieving employee from database
+// Retrieving ALL employee from database in table and sorting according to last entry on top
 router.get('/list',(req,res) => { 
     Employee.find((err, docs)  => {
         if(!err) {
@@ -75,7 +85,7 @@ function updateRecord(req, res) {
         else {
             if (err.name == 'ValidationError') {
                 handleValidationError(err, req.body);
-                res.render("employee/addOrEdit", {
+                res.render("employee/addOrEdit1", {
                     viewTitle: 'Update Employee',
                     emp: req.body
                     
@@ -85,22 +95,37 @@ function updateRecord(req, res) {
                 console.log('Error during record update : ' + err);
         }
     }).lean();
+
 }
 
 
 // Update Employee
 
-router.get('/:id', (req, res) => {
+router.get('/update/:id', (req, res) => {
     Employee.findById(req.params.id, (err, doc) => {console.log(doc)  
         if (!err) {
-            res.render("employee/addOrEdit", {
+            res.render("employee/addOrEdit1", {
                 viewTitle: "Update Employee",
                 emp: doc,
+                
+            
             });
         }
     }).lean();
 });
 
 
+
+
+// delete route employee
+
+router.get('/delete/:id', (req, res) => {
+    Employee.findByIdAndRemove(req.params.id, (err, doc) => {
+        if (!err) {
+            res.redirect('/employee/list');
+        }
+        else { console.log('Error in employee delete :' + err); }
+    });
+});
 
 module.exports =router;

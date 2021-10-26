@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const bcrypt = require('bcrypt');
 
 var employeeSchema = new mongoose.Schema({
     
@@ -39,6 +39,12 @@ var employeeSchema = new mongoose.Schema({
     // }
 });
 
+// Fire a Function before Doc save to empDB
+employeeSchema.pre('save', async function(next) {
+    const salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+});
 
 // Custom validation for email
 // employeeSchema.path('email').validate((val) => {
