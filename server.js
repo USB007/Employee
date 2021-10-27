@@ -11,6 +11,10 @@ const {check, validationResult} = require('express-validator')
 // const Handlebars = require('handlebars')
 const select = require('./handlebars_helper.js');
 const employeeController = require('./controllers/employeeController');
+var paginateHelper = require('express-handlebars-paginate');
+
+// //Register Helper
+// exphbs.registerHelper('paginate', paginate);
 
 
 var app = express();
@@ -42,4 +46,33 @@ app.listen(3003,() =>{
     console.log('Express server started at  port 3003')
 });
 
+
+// Pagination  
+// app.get('/list',(req,res) =>{
+// const page = parseInt(req.query.page)
+// const limit = parseInt(req.query.limit)
+
+// const startIndex = (page -1 ) * limit
+// const endIndex = page * limit
+
+// const results={}
+// if (endIndex < await model.countDocuments().exec()) {
+// result.next = {
+//   page: page +1,
+//   limit : limit
+// }
+// }
+
+// if (startIndex > 0) {
+// results.previous ={
+//   page: page - 1,
+// limit : limit
+// }
+// }
+
+// })
+
+//pagination end here
+
 app.use('/employee', employeeController);
+// app.use('/update', employeeController);

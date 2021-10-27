@@ -25,6 +25,7 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-handlebars": "^3.0.2",
+    "express-handlebars-paginate": "^1.0.3",
     "express-mongo-db": "^1.0.0",
     "express-validator": "^6.13.0",
     "hbs": "^2.7.0",

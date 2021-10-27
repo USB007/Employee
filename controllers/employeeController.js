@@ -13,7 +13,7 @@ router.get('/',(req,res) => {
 
 
 // Update Route
-// router.post('/',(req,res) => {
+// router.post('/update/:_id',(req,res) => {
 //     if(req.body._id == '')
 //     insertRecord(req,res);
 //     else
@@ -22,23 +22,11 @@ router.get('/',(req,res) => {
 
 
 // // Insert Employee Recoord into Database
-// router.post('/',(req,res) => {
-//     // req.body._id == ''
-//     insertRecord(req,res);
-//     // console.log('Error While Inserting employee record')
-//     });
-
-
-
-
-
-// Update Employee Recoord into Database
-router.post('/update',(req,res) => {
-    if(req.body._id == _id)
-    updateRecord(req,res);
-    else 
-    console.log('Error While updating employee record')
-});
+router.post('/',(req,res) => {
+    // req.body._id == ''
+    insertRecord(req,res);
+    // console.log('Error While Inserting employee record')
+    });
 
 
 // Insert Record Function
@@ -76,20 +64,21 @@ router.get('/list',(req,res) => {
 });
 
 
-// update employee function
 
+// update employee function
 function updateRecord(req, res) {
     Employee.findOneAndUpdate({ _id: req.body._id },
             req.body, { new: true }, (err, doc) => {
-        if (!err) { res.redirect('employee/list'); }
+        if (!err) { res.redirect('list'); }
         else {
             if (err.name == 'ValidationError') {
                 handleValidationError(err, req.body);
-                res.render("employee/addOrEdit1", {
+                res.render("employee/update", {
                     viewTitle: 'Update Employee',
                     emp: req.body
                     
-                });
+                    
+                });console.log("updated");
             }
             else
                 console.log('Error during record update : ' + err);
@@ -99,16 +88,32 @@ function updateRecord(req, res) {
 }
 
 
-// Update Employee
+// Update Employee Recoord into Database
+router.post('/update/:_id', (req, res) => {
 
-router.get('/update/:id', (req, res) => {
+    updateRecord(req,res);
+
+});
+
+
+
+// Update Route
+// router.post('/update/:_id',(req,res) => {
+//     if(req.body._id == '')
+//     insertRecord(req,res);
+//     else
+//     updateRecord(req,res);
+// });
+
+// Getting Employee details for Update Employee Records.
+
+router.get('/update/:id',(req,res) => {
     Employee.findById(req.params.id, (err, doc) => {console.log(doc)  
         if (!err) {
-            res.render("employee/addOrEdit1", {
+            res.render("employee/update", {
                 viewTitle: "Update Employee",
                 emp: doc,
                 
-            
             });
         }
     }).lean();
