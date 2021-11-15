@@ -1,5 +1,22 @@
+
+     <!-- jQuery library file -->
+     <script type="text/javascript" 
+     src="https://code.jquery.com/jquery-3.5.1.js">
+     </script>
+   
+
+ <!-- Datatable plugin CSS file -->
+    <link rel="stylesheet" href=
+"https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+
+
+      <!-- Datatable plugin JS library file -->
+     <script type="text/javascript" src=
+"https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js">
+     </script>
+
 <h3><a class="btn btn-secondary" href="/employee"><i class="fa fa-plus"></i> Create New</a> Employee List</h3>
-<table class="table table-striped" style="width:950px" align="center">
+<table class="table table-striped" id="tableID" style="width:950px" align="center">
     <thead>
         <tr>
             <th>Id</th>
@@ -19,11 +36,28 @@
             <td>{{this.email}}</td>
             <td>{{this.salary}}</td>
             <td>
-<a href="/employee/update/{{this._id}}" onclick="return confirm('Are you sure to update this record ?');"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+{{!-- <a href="/employee/update/{{this._id}}" onclick="return confirm('Are you sure to update this record ?');"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+<a href="/employee/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a> --}}
+
+<a href="/employee/{{this._id}}" onclick="return confirm('Are you sure to update this record ?');"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
 <a href="/employee/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
+
             </td>
         </tr>
         {{/each}}
     </tbody>
 
 </table>
+
+
+<script>
+
+/* Initialization of datatable */
+$(document).ready(function() {
+$('#tableID').DataTable({} );
+})
+    </script>
+
+
+
+    

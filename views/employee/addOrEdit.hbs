@@ -27,8 +27,14 @@
         
         <div class="form-group col-md-6">
             <label>Email ID</label>
-            <input type="text" class="form-control" name="email" placeholder="Plzz Enter email id" value="{{emp.email}}" pattern="[Aa-Zz0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" >
+            <input type="email" class="form-control" name="email" placeholder="Plzz Enter email id" value="{{emp.email}}"   title="Please Enter Proper Email Id" >
         </div>
+
+
+        {{!-- <div class="form-group col-md-6">
+            <label>Email ID</label>
+            <input pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" class="form-control" name="email" placeholder="Plzz Enter email id" value="{{emp.email}}" title="Please Enter Proper Email Id" >
+        </div> --}}
 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
 

@@ -1,0 +1,13 @@
+updateRecord: never use req.body directly in update parameter as 
+you need to validate the parameters which are going to update
+
+example email id update krne bheja but usme value phone number 
+ka daldiya to bhi update ho jayega which is wrong
+
+findoneandupdate ka document pdho 1 baar
+
+{% comment %}  and also list api mein pagination ni hai if bulk data hoga to how will you handle   {% endcomment %}
+
+also try to use try catch blocks in code
+
+insert mein bhi koi validation ni rkha incase username aaya he ni request mein to
